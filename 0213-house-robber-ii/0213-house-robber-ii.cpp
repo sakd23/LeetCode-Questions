@@ -14,11 +14,14 @@ public:
         {
             
             dp1[i]=max(dp1[i-1],a[i]+dp1[i-2]);
-            dp2[i]=max(dp2[i-1],a[i]+dp2[i-2]);
             
-            if(i==n-1)dp2[i]=dp2[i-1];
-
+       }
+        
+        for(int i=2;i<n-1;i++)
+        {
+            dp2[i]=max(dp2[i-1],a[i]+dp2[i-2]);
         }
-        return max(dp1[n-1],dp2[n-1]);
+        
+        return max(dp1[n-1],dp2[n-2]);
     }
 };
