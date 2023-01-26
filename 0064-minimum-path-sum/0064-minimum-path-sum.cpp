@@ -8,7 +8,7 @@ public:
         }
         if(j>=n or i>=m)
         {
-            return 1e9;
+            return INT_MAX;
         }
          if(dp[i][j]!=-1)return dp[i][j];
         return dp[i][j]=g[i][j]+min(help(g,i+1,j,m,n,dp),help(g,i,j+1,m,n,dp));
