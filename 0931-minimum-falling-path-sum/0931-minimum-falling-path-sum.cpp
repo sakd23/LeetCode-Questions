@@ -12,11 +12,31 @@ public:
         
         int ans=1e9;
         int row=matrix.size(),col=matrix[0].size();
-        vector<vector<int>> dp(200,vector<int>(200,-1));
-        for(int i=0;i<col;i++)
+        vector<int> curr(200),next(200);
+        
+        for(int i=row-1;i>=0;i--)
         {
-            ans=min(ans,help(matrix,0,i,row,col,dp));
+            for(int j=0;j<col;j++)
+            {
+                curr[j]=matrix[i][j];
+                if(i<row-1)
+                {
+                    int currmin=next[j];
+                   
+                    if(j>0)currmin=min(currmin,next[j-1]);
+                    if(j<col-1)currmin=min(currmin,next[j+1]);
+                    curr[j]+=currmin;
+                }
+                if(i==0)
+                {
+                    ans=min(ans,curr[j]);
+                }
+            }
+            next=curr;
+            
         }
+        
+       
         return ans;
          
         
