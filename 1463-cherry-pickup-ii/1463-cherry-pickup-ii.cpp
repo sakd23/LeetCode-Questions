@@ -53,14 +53,15 @@ int sign[3]={0,-1,+1};
                     {
                         for(int m=-1;m<2;m++)
                         {
-                            int one=0;
+                            
                             if(j+l>-1 and j+l<col and k+m>-1 and k+m<col)
                             {
-                                one=dp[i+1][k+m][j+l];
+//                                 
+                                ans=max(ans,dp[i+1][k+m][j+l]);
                             }
                             
                             
-                            ans=max(ans,one);
+                            
                         }
                     }
                     dp[i][j][k]+=ans;
