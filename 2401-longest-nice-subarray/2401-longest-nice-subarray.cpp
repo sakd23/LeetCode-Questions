@@ -32,37 +32,46 @@ public:
     }
     int longestNiceSubarray(vector<int>& nums) {
         int bits[50]={0};
-        int ans=0,n=nums.size(),srt=0;
+        int ans=0,n=nums.size(),srt=0,And=0;
         bool flag=true;
         for(int i=0;i<n;i++)
         {
-            help(bits,nums[i]);
-            for(auto x:bits)
-            {
-                if(x>1)
-                {
-                    flag=false;
-                    break;
-                }
-            }
             
-            while(!flag)
+            
+            while((And&nums[i])>0)
             {
-               help2(bits,nums[srt]);
-                bool flag1=true;
-                for(auto x:bits)
-            {
-                if(x>1)
-                {
-                    flag1=false;
-                    break;
-                }
-            }
-                if(flag1)flag=true;
+                And=(And^nums[srt]);
                 srt++;
             }
             
+//             help(bits,nums[i]);
+//             for(auto x:bits)
+//             {
+//                 if(x>1)
+//                 {
+//                     flag=false;
+//                     break;
+//                 }
+//             }
+            
+//             while(!flag)
+//             {
+//                help2(bits,nums[srt]);
+//                 bool flag1=true;
+//                 for(auto x:bits)
+//             {
+//                 if(x>1)
+//                 {
+//                     flag1=false;
+//                     break;
+//                 }
+//             }
+//                 if(flag1)flag=true;
+//                 srt++;
+//             }
+            And=And|nums[i];
             ans=max(ans,i-srt+1);
+            
         }
         return ans;
     }
