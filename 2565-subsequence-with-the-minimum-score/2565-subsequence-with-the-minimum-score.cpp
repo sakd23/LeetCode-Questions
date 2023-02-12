@@ -3,6 +3,8 @@ public:
     int minimumScore(string s, string t) {
         int ss=s.length(),st=t.length(),k=st-1;
         vector<int> dp(st,-1);
+        vector<int> dp2(st,ss);
+
         for(int i=ss-1;i>=0 and k>=0;i--)
         {
             if(s[i]==t[k])
@@ -11,16 +13,30 @@ public:
                 k--;
             }
         }
-        int res=k+1;
-        for(int i=0,j=0;i<ss and j<st and res>0;i++)
+        int ans=st;
+        for(int i=0,j=0;i<ss and j<st;i++)
         {
             if(s[i]==t[j])
             {
-                while(k<st and i>=dp[k])k++;
-                res=min(res,k-j-1);
+                dp2[j]=i;
+                ans=min(ans,st-j-1);
                 j++;
             }
         }
-        return res;
+        // for(auto x:dp2)cout<<x<<" ";
+        // cout<<endl;
+        int i=st-1;
+        while(i>=0 and dp[i]!=-1)
+        {
+         int lb=lower_bound(dp2.begin(),dp2.end(),dp[i])-dp2.begin();
+           int ub=0;
+            if(lb>0)ub=dp2[lb-1];
+            // cout<<ub<<" "<<i<<endl;
+            ans=min({ans,i-lb});
+            
+            i--;
+        }
+        // if(ans==INT_MAX)ans=0;
+        return max(0,ans);
     }
 };
