@@ -23,20 +23,19 @@ public:
                 j++;
             }
         }
-        // for(auto x:dp2)cout<<x<<" ";
-        // cout<<endl;
+      
         int i=st-1;
         while(i>=0 and dp[i]!=-1)
         {
          int lb=lower_bound(dp2.begin(),dp2.end(),dp[i])-dp2.begin();
            int ub=0;
             if(lb>0)ub=dp2[lb-1];
-            // cout<<ub<<" "<<i<<endl;
+            
             ans=min({ans,i-lb});
             
             i--;
         }
-        // if(ans==INT_MAX)ans=0;
+        
         return max(0,ans);
     }
 };
