@@ -5,7 +5,7 @@ public:
         memset(dp,0,sizeof(dp));
         int last=days.back();
       int  curr=days.size()-1;
-        dp[last]=min({costs[0],costs[1],costs[2]});
+        // dp[last]=min({costs[0],costs[1],costs[2]});
        for(int i=last;i>=1;i--)
        {
            if(i==days[curr])
