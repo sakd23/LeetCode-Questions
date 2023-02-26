@@ -1,44 +1,28 @@
 class Solution {
 public:
-    int minDistance(string word1, string word2) {
-        if(word1.size()==0)
+    int minDistance(string a, string b) {
+        int n=a.size(),m=b.size();
+        int dp[n+1][m+1];
+        for(int i=0;i<n;i++)
         {
-            return word2.size();
+            dp[i][m]=n-i;
         }
         
-        if(word2.size()==0)
+         for(int i=0;i<m;i++)
         {
-            return word1.size();
+            dp[n][i]=m-i;
         }
-        vector<int> curr(word2.size()+1,0),next(word2.size()+1,0);
-        curr[word2.size()]=1;
-        for(int i=0;i<=word2.size();i++)
-        {
-            next[i]=word2.size()-i;
-        }
+        dp[n][m]=0;
         
-        for(int i=word1.size()-1;i>=0;i--)
-        { 
-            curr[word2.size()]=word1.size()-i;
-            
-            for(int j=word2.size()-1;j>=0;j--)
+        for(int i=n-1;i>=0;i--)
+        {
+            for(int j=m-1;j>=0;j--)
             {
-                if(word1[i]==word2[j])
-                {
-                    curr[j]=next[j+1];
-                }
-                
+                if(a[i]==b[j]) dp[i][j]=dp[i+1][j+1];
                 else
-                {
-                    curr[j]=1+min(curr[j+1],min(next[j],next[j+1]));
-                }
-                
-                // cout<<curr[j]<<" ";
+                dp[i][j]=1+min({dp[i][j+1],dp[i+1][j],dp[i+1][j+1]});
             }
-            
-            next=curr;
-              
         }
-        return curr[0];
+        return dp[0][0];
     }
 };
