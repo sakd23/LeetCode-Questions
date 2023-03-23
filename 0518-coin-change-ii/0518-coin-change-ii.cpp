@@ -11,10 +11,7 @@ public:
             for(int  i=x;i<=amt;i++)
             {
                 dp[i]+=dp[i-x];
-                if(i==amt)
-                {
-                    cout<<x<<" "<<dp[i]<<endl;
-                }
+               
             }
         }
         return dp[amt];
