@@ -12,22 +12,25 @@ class Solution{
   public:
     int cutRod(int price[], int n) {
         //code here
-        // vector<vector<int>> dp(n+1,vector<int>(n+1,0));
-        vector<int> dp(n+1);
+        // classic unbounded knapsack
+        // n=max weight of sack
+        //1,2,3....n weights
+        // price array is values of weights.
+        vector<vector<int>> dp(n+1,vector<int>(n+1,0));
         
         for(int i=n-1;i>=0;i--)
         {
             for(int j=1;j<=n;j++)
             {
-                // dp[i][j]=dp[i+1][j];
+                dp[i][j]=dp[i+1][j];
                 
                 if(j>=(i+1))
                 {
-                    dp[j]=max(dp[j],price[i]+dp[j-(i+1)]);
+                    dp[i][j]=max(dp[i][j],price[i]+dp[i][j-(i+1)]);
                 }
             }
         }
-        return dp[n];
+        return dp[0][n];
     }
 };
 
