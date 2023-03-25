@@ -12,18 +12,19 @@ public:
     int knapSack(int n, int w, int val[], int wt[])
     {
         // code here
-        vector<vector<int>> dp(n+1,vector<int>(w+1,0));
+        vector<int> curr(w+1),next(w+1,0);
         
         for(int i=n-1;i>=0;i--)
         {
             for(int j=0;j<=w;j++)
             {
-                dp[i][j]=dp[i+1][j];
+                curr[j]=next[j];
                 if(j>=wt[i])
-                dp[i][j]=max(dp[i][j],val[i]+dp[i][j-wt[i]]);
+                curr[j]=max(curr[j],val[i]+curr[j-wt[i]]);
             }
+            next=curr;
         }
-        return dp[0][w];
+        return next[w];
     }
 };
 
