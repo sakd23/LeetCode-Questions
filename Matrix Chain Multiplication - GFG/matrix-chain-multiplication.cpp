@@ -26,8 +26,21 @@ int help(int a[],int n,int i,int j,vector<vector<int>>& dp)
 }
     int matrixMultiplication(int n, int a[])
     {
-        vector<vector<int>> dp(n+1,vector<int>(n+1,-1));
-        return help(a,n,1,n-1,dp);
+        vector<vector<int>> dp(n+1,vector<int>(n+1,0));
+        for(int i=n-1;i>0;i--)
+        {
+              
+            for(int j=i+1;j<n;j++)
+            {int ans=INT_MAX;
+                for(int k=i;k<=j-1;k++)
+                   {
+                      int curr=a[i-1]*a[k]*a[j]+dp[i][k]+dp[k+1][j];
+                      ans=min(ans,curr);
+                    }
+                    dp[i][j]=ans;
+            }
+        }
+        return dp[1][n-1];
     }
 };
 
