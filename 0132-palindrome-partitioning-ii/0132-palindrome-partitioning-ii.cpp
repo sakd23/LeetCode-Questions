@@ -10,7 +10,7 @@ public:
         }
         return true;
     }
-    int help(string s,int srt,int n,int dp[])
+    int help(string s,int srt,int n,vector<int>& dp)
     {
           if(srt>=n)return 0;
         if(pal(s,srt,n))return 0;
@@ -30,8 +30,7 @@ public:
     }
     int minCut(string s) {
         int n=s.size();
-        int dp[n+1];
-        memset(dp,-1,sizeof(dp));
+        vector<int> dp(n+1,-1);
         return help(s,0,n-1,dp);
     }
 };
