@@ -5,12 +5,30 @@ using namespace std;
 // } Driver Code Ends
 class Solution {
     private:
+    
+    bool detect(int v, vector<int> a[],int src, vector<int>& vis,int par)
+    {
+        vis[src]=1;
+        
+        for(auto x:a[src])
+        {
+           if(vis[x] and x!=par)
+           {
+               return true;
+           }
+           else if(!vis[x]){
+               if(detect(v,a,x,vis,src))return true;
+           }
+        }
+        return false;
+    }
+    
     bool detect(int v, vector<int> a[],int src, vector<int>& vis)
     {
         queue<pair<int,int>> q;
         q.push({src,-1});
        
-        vis[src]=1;
+        // vis[src]=1;
         while(!q.empty())
         {
             pp curr=q.front();
@@ -39,16 +57,16 @@ class Solution {
     bool isCycle(int v, vector<int> a[]) {
         // Code here
          vector<int> vis(v,0);
-         bool ans=false;
+        //  bool ans=false;
          for(int i=0;i<v;i++)
          {
              if(!vis[i])
              {
-                 if(detect(v,a,i,vis))return true;
+                 if(detect(v,a,i,vis,-1))return true;
                 
              }
          }
-         return ans;
+         return false;
     }
 };
 
