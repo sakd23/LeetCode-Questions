@@ -19,26 +19,72 @@ class Solution
 	    }
 	    st.push(node);
 	}
+	void bfs(vector<int> adj[],int v,vector<int>& indeg,vector<int>& ans)
+	{
+	    queue<int> q;
+	    for(int i=0;i<v;i++)
+	    {
+	        if(indeg[i]==0)
+	        {
+	            q.push(i);
+	            ans.push_back(i);
+	            
+	        }
+	    }
+	    
+	    while(!q.empty())
+	    {
+	        int siz=q.size();
+	        
+	        while(siz--)
+	        {
+	            int curr=q.front();
+	            q.pop();
+	            for(auto x:adj[curr])
+	            {
+	                if(indeg[x]>0)
+	                {
+	                    indeg[x]--;
+	                    if(indeg[x]==0)
+	                    {
+	                        q.push(x);
+	                        ans.push_back(x);
+	                    }
+	                }
+	            }
+	        }
+	    }
+	}
 	vector<int> topoSort(int V, vector<int> adj[]) 
 	{
 	    // code here
 	    stack<int> st;
 	    vector<int> vis(V,0);
-	    for(int i=0;i<V;i++)
-	    {
-	        if(!vis[i])
-	        {
-	            dfs(adj,i,vis,st);
-	        }
-	    }
-	    vector<int> ans;
-	    while(!st.empty())
-	    {
-	        int curr=st.top();
+	     vector<int> ans,indeg(V,0);
+	     for(int i=0;i<V;i++)
+	     {
+	         for(auto x:adj[i])
+	         {
+	           indeg[x]++;    
+	         }
+	     }
+	   // for(int i=0;i<V;i++)
+	   // {
+	   //     if(!vis[i])
+	   //     {
+	   //         dfs(adj,i,vis,st);
+	   //     }
+	   // }
+	   
+	     bfs(adj,V,indeg,ans);
+	   
+	   // while(!st.empty())
+	   // {
+	   //     int curr=st.top();
 	        
-	        st.pop();
-	        ans.push_back(curr);
-	    }
+	   //     st.pop();
+	   //     ans.push_back(curr);
+	   // }
 	    return ans;
 	}
 };
