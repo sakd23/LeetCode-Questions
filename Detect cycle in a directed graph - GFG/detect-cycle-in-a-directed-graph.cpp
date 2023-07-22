@@ -47,15 +47,19 @@ class Solution {
 	}
     bool isCyclic(int V, vector<int> adj[]) {
         // code here
-    int vis[V] = {0};
-		int pathVis[V] = {0};
-
-		for (int i = 0; i < V; i++) {
-			if (!vis[i]) {
-				if (dfsCheck(i, adj, vis, pathVis) == true) return true;
-			}
-		}
-		return false;
+        int vis[V]={0};
+        int path[V]={0};
+     
+   
+        
+        for(int i=0;i<V;i++)
+        {
+            if(!vis[i])
+           {
+                if(dfs(i,adj,vis,path)==true) return true;
+           }
+        }
+        return false;
     }
 };
 
