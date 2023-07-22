@@ -7,12 +7,61 @@ class Solution {
   public:
     // Function to detect cycle in a directed graph.
     
-    bool dfs(int v, vector<int> adj[],int vis[],int path[])
+
+    // Function to detect cycle in a directed graph.
+    bool bfs(int V, vector<int> adj[])
     {
-       
-        vis[v]=1;
-        path[v]=1;
-        
+                    queue<int> q;
+            vector<int> indeg(V,0),topo;
+            
+            for(int i=0;i<V;i++)
+            {
+              for(auto x:adj[i])
+              {
+                 indeg[x]++;      
+              }
+            }
+            
+            for(int i=0;i<V;i++)
+            {
+                
+              if(indeg[i]==0)
+              {
+                  q.push(i);
+              
+                  topo.push_back(i);
+              }
+            }
+            
+            while(!q.empty())
+            {
+                int siz=q.size();
+                while(siz--)
+                {
+                    int curr=q.front();
+                    q.pop();
+                    
+                    for(auto x:adj[curr])
+                    {
+                      indeg[x]--;
+                      if(indeg[x]==0)
+                      {
+                          q.push(x);
+                          
+                          topo.push_back(x);
+                      }
+                    }
+                }
+            }
+            return !(topo.size()==V);
+    }
+    
+    
+    bool dfs(int v, vector<int> adj[],vector<bool>& vis,vector<bool>& path)
+    {
+        vis[v]=true;
+        path[v]=true;
+        bool ans=false;
         for(auto x:adj[v])
         {
             if(path[x])return true;
@@ -21,46 +70,27 @@ class Solution {
                 if(dfs(x,adj,vis,path))return true;
             }
         }
-        path[v]=0;
-        return 0;
+        path[v]=false;
+        return ans;
     }
-    	bool dfsCheck(int node, vector<int> adj[], int vis[], int pathVis[]) {
-		vis[node] = 1;
-		pathVis[node] = 1;
-
-		// traverse for adjacent nodes
-		for (auto it : adj[node]) {
-			// when the node is not visited
-			if (!vis[it]) {
-				if (dfsCheck(it, adj, vis, pathVis) == true)
-					return true;
-			}
-			// if the node has been previously visited
-			// but it has to be visited on the same path
-			else if (pathVis[it]) {
-				return true;
-			}
-		}
-
-		pathVis[node] = 0;
-		return false;
-	}
+    
     bool isCyclic(int V, vector<int> adj[]) {
-        // code here
-        int vis[V]={0};
-        int path[V]={0};
-     
-   
-        
-        for(int i=0;i<V;i++)
-        {
-            if(!vis[i])
-           {
-                if(dfs(i,adj,vis,path)==true) return true;
-           }
-        }
-        return false;
+        // DFS solution
+        // vector<bool> vis(V,false),path(V,false);
+        // for(int i=0;i<V;i++)
+        // {
+        //     if(!vis[i])
+        //   {
+        //         if(dfs(i,adj,vis,path))return true;
+        //   }
+        // }
+        // return false;
+    
+    //kahn's algo (bfs)
+
+    return bfs(V,adj);
     }
+
 };
 
 //{ Driver Code Starts.
