@@ -29,11 +29,10 @@ class Solution {
         }
         stack<int> st;
         vector<int> vis(N,0),dis(N,1e9);
-        for(int i=0;i<N;i++)
-        {
-            if(vis[i]==0)
-            dfs(adj,st,vis,i);
-        }
+       
+           
+            dfs(adj,st,vis,0);
+        
         dis[0]=0;
         
         while(!st.empty())
