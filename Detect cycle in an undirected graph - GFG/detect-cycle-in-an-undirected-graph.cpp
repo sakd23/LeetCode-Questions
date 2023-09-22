@@ -4,69 +4,30 @@ using namespace std;
 
 // } Driver Code Ends
 class Solution {
-    private:
-    
-    bool detect(int v, vector<int> a[],int src, vector<int>& vis,int par)
-    {
-        vis[src]=1;
-        
-        for(auto x:a[src])
-        {
-           if(vis[x] and x!=par)
-           {
-               return true;
-           }
-           else if(!vis[x]){
-               if(detect(v,a,x,vis,src))return true;
-           }
-        }
-        return false;
-    }
-    
-    bool detect(int v, vector<int> a[],int src, vector<int>& vis)
-    {
-        queue<pair<int,int>> q;
-        q.push({src,-1});
-       
-        // vis[src]=1;
-        while(!q.empty())
-        {
-            pp curr=q.front();
-            q.pop();
-            int parent=curr.second;
-            for(auto x:a[curr.first])
-            {
-                
-                if(!vis[x])
-                {
-                    q.push({x,curr.first});
-                    vis[x]=1;
-                }
-                else if(x!=parent)
-                {
-                    return true;
-                }
-            }
-            
-        }
-        return false;
-    }
   public:
-  typedef pair<int,int> pp;
     // Function to detect cycle in an undirected graph.
-    bool isCycle(int v, vector<int> a[]) {
+    bool dfs(vector<int> adj[],int v,int par,vector<int>& vis)
+    {
+        vis[v]=1;
+        for(auto x:adj[v])
+        {
+            if(x==par)continue;
+            if(vis[x])return true;
+            if(dfs(adj,x,v,vis))return true;
+        }
+        return false;
+    }
+    bool isCycle(int V, vector<int> adj[]) {
         // Code here
-         vector<int> vis(v,0);
-        //  bool ans=false;
-         for(int i=0;i<v;i++)
-         {
-             if(!vis[i])
-             {
-                 if(detect(v,a,i,vis,-1))return true;
-                
-             }
-         }
-         return false;
+        vector<int> vis(V,0);
+        for(int i=0;i<V;i++)
+        {
+            if(!vis[i])
+            {
+                if(dfs(adj,i,-1,vis))return true;
+            }
+        }
+        return false;
     }
 };
 
